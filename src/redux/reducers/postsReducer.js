@@ -10,7 +10,7 @@ export const posts = (state = initState, action) => {
         case SET_ALL_POSTS: {
             return {
                 ...state,
-                ...state.posts = action.payload,
+                posts: action.payload,
             }
         }
         case CREATE_NEW_POST: {

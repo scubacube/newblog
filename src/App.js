@@ -11,7 +11,7 @@ import {Login} from "./components/login/Login";
 import {Createpost} from "./components/post/Createpost";
 import Fullpost from './components/post/Fullpost';
 import {getAllPost} from "./redux/actions/postsActions";
-import {useDispatch, useSelector, shallowEqual} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import styled from 'styled-components';
 import store from './redux/store';
 import jwtDecode from "jwt-decode";
@@ -37,29 +37,28 @@ export const App = () => {
           // store.dispatch(getAllPost());
       }
   }
-  const postsItems = useSelector(({posts}) => posts, shallowEqual);
+  const postsItems = useSelector(({posts}) => {
+    return posts.posts
+  });
+  const postCount = useSelector(({posts}) => {
+    return posts.postCount
+  });
 
   const authenticated = useSelector(({user}) => {
       return user.authenticated
   });
 
-  const loading = useSelector(({user}) => {
-    return user.loading
-  });
-
   React.useEffect(() => {    
     dispatch(getAllPost())
-  },[dispatch])
+  },[ postsItems])
 
-  if(loading) {
-    return <p>LOADING...</p>
-  }
+  
   return (
       <div className="App">
         <Header />
             <ContainerStyled>
                 <Switch>
-                    <Route exact path='/' render={() => <Main posts={postsItems}/>}  />
+                    <Route exact path='/' render={() => <Main posts={postsItems} postCount={postCount}/>}  />
                     <Route path='/about' component={About}/>
                     <Route path='/login' component={Login} />
                     {authenticated && <Route path='/create' component={Createpost} />}

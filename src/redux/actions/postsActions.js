@@ -24,13 +24,14 @@ export const getAllPost = () => (dispatch) => {
     dispatch({ type: LOADING_UI_CLEAR });
 }
 
-export const createNewPost = (post, history) => (dispatch) => {
+export const createNewPost = (post, history) => (dispatch) => {  
   dispatch({ type: LOADING_UI });
-  axios.post('/newpost', post)
-      .then(res => {
-        dispatch(createNewPostAction(res.data));
-        history.push('/');
-      })
-      .catch(err => console.log(err))
-  dispatch({ type: LOADING_UI_CLEAR });
+    axios.post('/newpost', post)
+        .then(result => {
+          dispatch(createNewPostAction(result.data));
+          dispatch({ type: LOADING_UI_CLEAR });
+          history.push('/')
+        })
+        .catch(err => console.log(err))
+    
 }

@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import {useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {loginUserAction} from "../../redux/actions/loginActions";
-import {useDispatch} from "react-redux";
 import styled from 'styled-components';
+import {Loading} from './../main/Loading';
 
 const LoginForm = styled.div`
   display: flex;
@@ -22,6 +23,10 @@ export function Login() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
 
+    const loading = useSelector(({user}) => {
+      return user.loading
+    });
+
     const handleSubmit = (e) => {
         const userData = {
             email: email,
@@ -38,13 +43,13 @@ export function Login() {
         setPassword(e.target.value);
     }
 
-    return (
-        <LoginForm>
-            <form>
-                <input value={email} onChange={handleOnChangeEmail} type="email"/>
-                <input value={password} onChange={handleOnChangePassword} type="password"/>
-                <button onClick={handleSubmit}>login</button>
-            </form>
-        </LoginForm>
-    )
+    return loading ? <Loading /> : (
+      <LoginForm>
+          <form>
+              <input value={email} onChange={handleOnChangeEmail} type="email"/>
+              <input value={password} onChange={handleOnChangePassword} type="password"/>
+              <button onClick={handleSubmit}>login</button>
+          </form>
+      </LoginForm>
+  )
 }

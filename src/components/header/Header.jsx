@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 import styled from 'styled-components';
 import {useDispatch} from "react-redux";
 import {logoutUser} from "../../redux/actions/loginActions";
+import {useHistory} from "react-router-dom";
 
 const Logo = styled.img`
   width: 60px;
@@ -33,15 +34,15 @@ const Head = styled.div`
 
 export function Header() {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const authenticated = useSelector(({user}) => {
         return user.authenticated
     });
 
     const handleSubmit = (e) => {
-      // setLoading(true);
       e.preventDefault();
-      dispatch(logoutUser());
+      dispatch(logoutUser(history));
   }
   
     return (
