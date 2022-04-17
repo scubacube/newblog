@@ -50,7 +50,7 @@ export const App = () => {
 
   React.useEffect(() => {    
     dispatch(getAllPost())
-  },[ postsItems])
+  },[])
 
   
   return (
@@ -62,7 +62,7 @@ export const App = () => {
                     <Route path='/about' component={About}/>
                     <Route path='/login' component={Login} />
                     {authenticated && <Route path='/create' component={Createpost} />}
-                    <Route path={`/post/:postId`} render={() => <Fullpost posts={postsItems} />}/>
+                    <Route path={`/post/:postId`} render={(props) => <Fullpost {...props} />}/>
                 </Switch>
             </ContainerStyled>
       </div>

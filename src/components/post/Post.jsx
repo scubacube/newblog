@@ -13,8 +13,8 @@ const PostHeader = styled.h2`
 export const Post = ({h1, body, createdAt, userHandle, postId}) => {
     return <>
         <div className="post">
-          <PostHeader><NavLink to={`/post/${postId}`} >{h1}</NavLink></PostHeader>
-          <ReactMarkdown children={body} />
+          <PostHeader><NavLink to={`/post/${postId}`} ><ReactMarkdown children={h1}/></NavLink></PostHeader>
+          <ReactMarkdown children={body} />      
           <div>
           date: {createdAt}
           </div>

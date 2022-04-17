@@ -8,10 +8,9 @@ let initState = {
 export const posts = (state = initState, action) => {
     switch (action.type) {
         case SET_ALL_POSTS: {
-            return {
-                ...state,
-                posts: action.payload,
-            }
+          let stateCopy = {...state};
+          stateCopy.posts = action.payload
+            return stateCopy
         }
         case CREATE_NEW_POST: {
           return {

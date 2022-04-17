@@ -9,6 +9,5 @@ export const Main = ({posts, postCount}) => {
       const body = brString.replace(h1, '');
       return <Post key={el.postId} {...el} body={body} h1={h1}/>
     }) : <Loading />
-
     return el;
 }
