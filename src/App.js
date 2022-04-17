@@ -4,7 +4,7 @@ import {Container} from "@material-ui/core";
 import {Header} from "./components/header/Header";
 import {Route, Switch} from "react-router-dom";
 import {About} from "./components/about/About";
-import {Post} from "./components/post/Post";
+import {Loading} from "./components/main/Loading";
 import {Main} from "./components/main/Main";
 import axios from "axios";
 import {Login} from "./components/login/Login";
@@ -37,11 +37,9 @@ export const App = () => {
           // store.dispatch(getAllPost());
       }
   }
-  const postsItems = useSelector(({posts}) => {
-    return posts.posts
-  });
-  const postCount = useSelector(({posts}) => {
-    return posts.postCount
+  
+  const loading = useSelector(({user}) => {
+    return user.loading
   });
 
   const authenticated = useSelector(({user}) => {
@@ -52,19 +50,20 @@ export const App = () => {
     dispatch(getAllPost())
   },[])
 
-  
   return (
       <div className="App">
-        <Header />
-            <ContainerStyled>
-                <Switch>
-                    <Route exact path='/' render={() => <Main posts={postsItems} postCount={postCount}/>}  />
-                    <Route path='/about' component={About}/>
-                    <Route path='/login' component={Login} />
-                    {authenticated && <Route path='/create' component={Createpost} />}
-                    <Route path={`/post/:postId`} render={(props) => <Fullpost {...props} />}/>
-                </Switch>
-            </ContainerStyled>
+        <Header />            
+        {!loading ? (
+          <ContainerStyled>
+            <Switch>
+              <Route exact path='/' component={Main}  />
+              <Route path='/about' component={About}/>
+              <Route path='/login' component={Login} />
+              {authenticated && <Route path='/create' component={Createpost} />}
+              <Route path={`/post/:postId`} component={Fullpost}/>
+            </Switch>
+          </ContainerStyled>
+        ) : <Loading />}            
       </div>
   );
 }

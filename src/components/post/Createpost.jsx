@@ -1,21 +1,18 @@
-import {React, useState, useEffect} from 'react';
+import {React, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {createNewPost} from "../../redux/actions/postsActions";
 import styled from 'styled-components';
 import {useHistory} from "react-router-dom";
-import {Loading} from './../main/Loading';
+import Button from '@mui/material/Button';
 
 const TextareaStyled = styled.textarea`
   width: 100%;
   background-color: #ddd;
+  font-size: 18px;
 `;
 export const Createpost = () => {
     const history = useHistory();
     const dispatch = useDispatch();
-
-    const loading = useSelector(({user}) => {
-      return user.loading
-    });
 
     const [post, setPost] = useState();
 
@@ -31,12 +28,12 @@ export const Createpost = () => {
     }
    
 
-    return loading 
-    ? <Loading /> 
-    : <>
+    return (
+      <>
         <TextareaStyled onChange={(e) => textArea(e)} name="" id="" cols="30" rows="10"></TextareaStyled>
-        <button onClick={createPost}>Post</button>
-    </>
+        <Button variant="contained" onClick={createPost}>Post</Button>
+      </>
+    )
 }
 
 

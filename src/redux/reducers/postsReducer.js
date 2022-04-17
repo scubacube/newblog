@@ -10,7 +10,9 @@ export const posts = (state = initState, action) => {
         case SET_ALL_POSTS: {
           let stateCopy = {...state};
           stateCopy.posts = action.payload
-            return stateCopy
+          stateCopy.postCount = action.payload.length
+          
+          return stateCopy
         }
         case CREATE_NEW_POST: {
           return {
